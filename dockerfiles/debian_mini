@@ -1,12 +1,12 @@
 FROM --platform=i386 i386/debian:buster
 ARG DEBIAN_FRONTEND=noninteractive
-ENV LANG=en_US.UTF-8 \ 
-	LANGUAGE=en_US \ 
-	LC_ALL=en_US.UTF-8
 RUN apt-get clean && apt-get update && apt-get -y upgrade
-RUN apt-get -y install apt-utils locales \
+RUN apt-get -y install apt-utils locales locales-all\
 	python3 python3-pip \
 	fakeroot make
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
 RUN ["pip3", "install", "gns3-server"]
 RUN useradd -m user && echo "user:password" | chpasswd
 COPY --chown=user:user ./examples /home/user/examples
