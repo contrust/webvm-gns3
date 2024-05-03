@@ -6,4 +6,4 @@ RUN apt-get -y install apt-utils locales\
 	rm -rf /var/lib/apt/lists/*
 RUN ["pip3", "install", "gns3-server"]
 ENV LANG="en_US.UTF-8"
-CMD ["gns3server", "--config", "gns3/configs/gns3_server.conf"]
+CMD ["/bin/bash"]
