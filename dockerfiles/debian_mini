@@ -8,7 +8,7 @@ RUN apt-get -y install apt-utils gcc \
 	file luajit make lua50 dialog curl \
 	less cowsay netcat-openbsd
 RUN ["curl", "https://raw.githubusercontent.com/GNS3/gns3-server/master/scripts/remote-install.sh", "-O"]
-RUN ["./remote-install.sh", "--with-openvpn", "--with-iou", "--with-i386-repository"]
+RUN ["/bin/bash", "-c", "chmod +x remote-install.sh && ./remote-install.sh --with-openvpn --with-iou --with-i386-repository"]
 RUN useradd -m user && echo "user:password" | chpasswd
 COPY --chown=user:user ./examples /home/user/examples
 COPY --chown=user:user ./gns3 /home/user/gns3
