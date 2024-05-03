@@ -1,15 +1,16 @@
 FROM --platform=i386 i386/debian:buster
 ARG DEBIAN_FRONTEND=noninteractive
+ENV LANG=en_US.UTF-8 \ 
+	LANGUAGE=en_US \ 
+	LC_ALL=en_US.UTF-8
 RUN apt-get clean && apt-get update && apt-get -y upgrade
-RUN apt-get -y install apt-utils gcc \
-	python3 vim unzip ruby nodejs \
+RUN apt-get -y install apt-utils gcc locales \
+	python3 python3-pip vim unzip ruby nodejs \
 	fakeroot dbus base whiptail hexedit \
-	patch wamerican ucf manpages \
-	file luajit make lua50 dialog curl \
+	patch ucf \
+	file luajit make dialog curl \
 	less cowsay netcat-openbsd
-RUN ["curl", "https://raw.githubusercontent.com/GNS3/gns3-server/master/scripts/remote-install.sh", "-O"]
-RUN chmod +x remote-install.sh
-RUN ./remote-install.sh --with-openvpn --with-iou --with-i386-repository
+RUN ["pip3", "install", "gns3-server"]
 RUN useradd -m user && echo "user:password" | chpasswd
 COPY --chown=user:user ./examples /home/user/examples
 COPY --chown=user:user ./gns3 /home/user/gns3
